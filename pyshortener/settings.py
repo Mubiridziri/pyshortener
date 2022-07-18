@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'shortenercore.apps.ShortenercoreConfig',
     'django.contrib.contenttypes',
     'django.contrib.auth',
+    'django.contrib.sessions',
     'django.contrib.staticfiles',
 ]
 
