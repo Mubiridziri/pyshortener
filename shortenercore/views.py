@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.utils import timezone
@@ -5,8 +6,9 @@ from .models import Link
 
 
 def index(request):
-    alive_links_list = Link.objects.order_by('-pub_date')[:5]
-    context = { 'alive_links_list': alive_links_list, 'host': request.build_absolute_uri('/')}
+    latest_links = Link.objects.order_by('-pub_date')[:5]
+    all_links = Link.objects.all().order_by('-pub_date').filter(pub_date__gte=datetime.date.today())
+    context = { 'latest_links': latest_links, 'all_links': all_links, 'host': request.build_absolute_uri('/')}
     return render(request, 'index.html', context)
 
 
@@ -18,6 +20,12 @@ def create(request):
     link.original_link = original_link
     link.pub_date = timezone.now()
     link.save()
+    return HttpResponseRedirect('/')
+
+
+def remove_link(request, link_id):
+    link = get_object_or_404(Link, pk=link_id)
+    link.delete()
     return HttpResponseRedirect('/')
 
 

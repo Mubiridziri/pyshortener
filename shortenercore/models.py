@@ -9,5 +9,5 @@ class Link(models.Model):
     pub_date = models.DateTimeField('published date')
     original_link = models.CharField(max_length=500)
 
-    def link_is_alive(self):
+    def is_alive(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)

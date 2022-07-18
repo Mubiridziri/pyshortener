@@ -32,17 +32,42 @@
             </div>
         </fieldset>
     </form>
-    <h3>Links History</h3>
+    <h3>Latest 5 links</h3>
     <div class="container">
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-            {% if alive_links_list %}
-            {% for link in alive_links_list %}
+            {% if latest_links %}
+            {% for link in latest_links %}
+            <div class="col px-4 py-4">
+                <div class="card" style="width: 15rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ link.name }}</h5>
+                        <p>Your link: {{ host }}l/{{ link.id }}</p>
+                            {% if link.is_alive %}
+                        <a href="{{ host }}l/{{ link.id }}" class="card-link" target="_blank">Open Link</a>
+                            {% endif %}
+                        <a href="/remove/{{ link.id }}" class="card-link">Remove Link</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No links are available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <h3>All active links</h3>
+    <div class="container">
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+            {% if all_links %}
+            {% for link in all_links %}
             <div class="col px-4 py-4">
                 <div class="card" style="width: 15rem;">
                     <div class="card-body">
                         <h5 class="card-title">{{ link.name }}</h5>
                         <p>Your link: {{ host }}l/{{ link.id }}</p>
                         <a href="{{ host }}l/{{ link.id }}" class="card-link" target="_blank">Open Link</a>
+                        <a href="/remove/{{ link.id }}" class="card-link">Remove Link</a>
                     </div>
                 </div>
             </div>
